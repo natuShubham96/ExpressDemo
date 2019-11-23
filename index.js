@@ -21,7 +21,7 @@ const morgan = require('morgan');
 const logger = require('./logger');
 const auth = require('./auth');
 
-const testData = [{id: 1, name: 'asd'}];
+const tests = require('./routes/test');
 
 // console.log(`Production or dev????? ${process.env.NODE_ENV}`)
 
@@ -41,6 +41,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 
 app.use(helmet());
+
+app.use('/api/test', tests);
 
 //to check development or production environment
 
@@ -66,22 +68,6 @@ console.log(`Mail Server: ${config.get('mail.host')}`);
 app.use(logger);
 
 app.use(auth);
-
-//Hitting the apis
-
-app.get('/api/test', (req, res) => {
-  res.render('index', {title: 'My Express Demo', message: 'Hello'});
-});
-
-app.post('/api/test', (req, res) => {
-  const data = {
-    id: testData.length + 1,
-    name: req.body.name,
-  };
-  testData.push(data);
-  console.log(req.query);
-  res.send(data);
-});
 
 //Port related operations
 
