@@ -27,6 +27,11 @@ const testData = [{id: 1, name: 'asd'}];
 
 // console.log(`Environment ${app.get('env')}`)
 
+//Using Template Engines
+
+app.set('view engine', 'pug');
+app.set('views', './views');
+
 //Using middlewares
 
 app.use(express.json());
@@ -65,7 +70,7 @@ app.use(auth);
 //Hitting the apis
 
 app.get('/api/test', (req, res) => {
-  res.send(testData);
+  res.render('index', {title: 'My Express Demo', message: 'Hello'});
 });
 
 app.post('/api/test', (req, res) => {
