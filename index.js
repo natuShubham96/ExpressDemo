@@ -1,3 +1,7 @@
+//Debugger imported
+
+const startUpDebugger = require('debug')('app: startup');
+const dbDebugger = require('debug')('app:db');
 //Importing Config
 
 const config = require('config');
@@ -39,8 +43,12 @@ let environment = app.get('env');
 
 if (environment === 'development') {
   app.use(morgan('tiny'));
-  console.log('Using Morgan...');
+  startUpDebugger('Using Morgan...');
 }
+
+//When we will use db
+
+dbDebugger('DB Connected...');
 
 //Using configurations
 
@@ -74,4 +82,4 @@ app.post('/api/test', (req, res) => {
 
 const port = process.env.port || 3000;
 
-app.listen(port, () => console.log('Listening....'));
+app.listen(port, () => console.log(`Listening....${port}`));
